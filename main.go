@@ -3,13 +3,13 @@ package main
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/mfcbentes/go-gin-gorm/config"
 	"github.com/mfcbentes/go-gin-gorm/controller"
 	"github.com/mfcbentes/go-gin-gorm/helper"
 	"github.com/mfcbentes/go-gin-gorm/model"
 	"github.com/mfcbentes/go-gin-gorm/repository"
+	"github.com/mfcbentes/go-gin-gorm/router"
 	"github.com/mfcbentes/go-gin-gorm/service"
 	"github.com/rs/zerolog/log"
 )
@@ -33,12 +33,7 @@ func main() {
 	tagsController := controller.NewTagsController(tagsService)
 
 	// Router
-
-	routes := gin.Default()
-
-	routes.GET("", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, "Welcome home")
-	})
+	routes := router.NewRouter(tagsController)
 
 	server := &http.Server{
 		Addr:    ":8080",
